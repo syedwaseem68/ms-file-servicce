@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ms-nokia-test
+  name: ms-nokia-file-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ms-nokia-file-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: ms-nokia-file-service
+    spec:
+      containers:
+        - name: ms-nokia-file-service
+          image: ms-nokia-file-service:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              cpu: 0.5
